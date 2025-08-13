@@ -70,7 +70,7 @@
 
       .top-row button {
         flex: 0 0 auto;  /* Do not grow, do not shrink, size based on width/padding */
-        padding: 10px 50px;
+        padding: 10px 10px;
         height: 50px;
         border-radius: 15px;
         border: black 3px solid;
@@ -79,6 +79,7 @@
         font-weight: 400;
         margin-top: -10px;
         cursor: pointer;
+        width: 170px;
         
       }
 
@@ -156,7 +157,7 @@
     <div class="box">
       <div class="top-row">
         <h1>Daily Task Manager</h1>
-        <button id="btn">New Task</button>
+        <button id="btn">Exit</button>
       </div>
     </div>
     <div id="taskBoxBtn" class="createTaskBox"> 
@@ -184,35 +185,29 @@
 
       function createNewDivButton(newClass) { //this function opens closes the new task option allowing input to be inputted and saved as a new task
 
-        if(newDivBtn.classList.contains(newClass)) {
-         newDivBtn.classList.remove(newClass); 
-        }
-        else if(!newDivBtn.classList.contains(newClass)) {
-          newDivBtn.classList.add(newClass);
-        }
-        if (newDivBtn.contains(newText)) {
-          // If yes, remove them
-          newDivBtn.removeChild(newText);
-        } else if(!newDivBtn.contains(newText)){
-          // If not, append them
-          newDivBtn.appendChild(newText);
-        }
-        if (newDivBtn.contains(newInput)) {
-          // If yes, remove them
-          newDivBtn.removeChild(newInput);
-        } else if(!newDivBtn.contains(newInput)){
-          // If not, append them
-          newDivBtn.appendChild(newInput);
-        }
+        newDivBtn.classList.toggle(newClass);
 
-        //for button
-        if (newDivBtn.contains(newButton)) {
-          // If yes, remove them
-          newDivBtn.removeChild(newButton);
-        } else if(!newDivBtn.contains(newButton)){
-          // If not, append them
-          newDivBtn.appendChild(newButton);
+        [newText, newInput, newButton].forEach(el => {
+            if (newDivBtn.contains(el)) {
+                newDivBtn.removeChild(el);
+            } else {
+                newDivBtn.appendChild(el);
+            }
+        });
+
+        /*let buttonText = document.getElementById('btn');
+        if(buttonText === 'New Task') {
+          buttonText.textContent = 'Exit';
         }
+        else {
+          buttonText.textContent = 'New Task';
+        }*/
+
+        const btn = document.getElementById('btn');
+        btn.textContent = (btn.textContent === 'Exit') ? 'New Task' : 'Exit';
+      
+
+
       }
 
       //const inpNewTask = document.getElementById('newTask-inp');
@@ -226,29 +221,6 @@
         createNewDivButton('createTaskBox');
         newInput.value = '';
         newInput.placeholder = 'Type a new task...';
-        /*if (newDivBtn.contains(newText)) {
-          // If yes, remove them
-          newDivBtn.removeChild(newText);
-        } else if(!newDivBtn.contains(newText)){
-          // If not, append them
-          newDivBtn.appendChild(newText);
-        }
-        if (newDivBtn.contains(newInput)) {
-          // If yes, remove them
-          newDivBtn.removeChild(newInput);
-        } else if(!newDivBtn.contains(newInput)){
-          // If not, append them
-          newDivBtn.appendChild(newInput);
-        }
-
-        //for button
-        if (newDivBtn.contains(newButton)) {
-          // If yes, remove them
-          newDivBtn.removeChild(newButton);
-        } else if(!newDivBtn.contains(newButton)){
-          // If not, append them
-          newDivBtn.appendChild(newButton);
-        }*/
       });
       
       function createNewDiv(newClassName) {
@@ -269,6 +241,17 @@
 
         checkBox.classList.add('fa-solid', 'fa-square');
 
+
+        checkBox.addEventListener('click', () => {
+          if (checkBox.classList.contains('fa-square')) {
+            checkBox.classList.remove('fa-square');
+            checkBox.classList.add('fa-check-square');
+          } else {
+            checkBox.classList.remove('fa-check-square');
+            checkBox.classList.add('fa-square');
+          }
+        });
+
         const deleteBox = document.createElement('i');
         deleteBox.classList.add('fa-solid', 'fa-trash');
 
@@ -287,26 +270,9 @@
       document.querySelector('.newBtn').addEventListener('click', function() {
 
         createNewDiv('list-bar');
-        attachListenersToAllIcons();
         createNewDivButton('createTaskBox');
       });
 
-      function attachListenersToAllIcons() {
-        iconList.forEach(icon => {
-          icon.addEventListener('click', () => {
-            if(icon.classList.contains('fa-square')) {
-              icon.classList.remove('fa-square');
-              icon.classList.add('fa-check-square');
-            }
-            else if(icon.classList.contains('fa-check-square')) {
-              icon.classList.remove('fa-check-square');
-              icon.classList.add('fa-square');
-            }
-          })
-
-          console.log(icon);
-        })
-      }
 
       //add <p> with text New Task
       //add the input into the div with the id and then add the class to it?
