@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <title>ToDoForYou</title>
+    <style>
+
+      body {
+        overflow: hidden;
+      }
+
+      .list-bar {
+        margin-top: 10px;
+        height: 80px;
+        width: 600px;
+        border-radius: 10px;
+        background-color: lightblue;
+        border: black 2px solid;
+        margin-left: 50px;
+        display: flex;
+        flex-direction: row;
+      }
+
+      .list-bar p {
+
+        flex: 10;
+        font-size: 25px;
+        margin-left: 25px;
+        font-family: 'Fredoka', sans-serif;
+        font-weight: 400;
+        padding-top: 0px;
+      }
+
+      .list-bar i {
+
+        flex: 1;
+        font-size: 30px;
+        padding-top: 30px;
+        cursor: pointer;
+
+      }
+
+      .box {
+
+        border: black 3px solid; /* You forgot 'solid' for the border */
+        border-radius: 15px;
+        background-color: lightpink;
+        margin: 100px auto; /* auto horizontally centers block elements */
+        width: 50%; /* set a fixed width or percentage so it's not full width */
+        padding: 50px;
+        height: 800px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      }
+
+      .top-row {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .top-row h1 {
+
+        margin-left: -100px;
+        margin-top: -10px;
+        flex: 2;
+        text-align: center;
+        font-size: 50px;
+        font-family: 'Fredoka', sans-serif;
+      }
+
+      .top-row button {
+        flex: 0 0 auto;  /* Do not grow, do not shrink, size based on width/padding */
+        padding: 10px 50px;
+        height: 50px;
+        border-radius: 15px;
+        border: black 3px solid;
+        font-family: 'Fredoka', sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        margin-top: -10px;
+        cursor: pointer;
+        
+      }
+
+      .top-row button:hover {
+
+        background-color: lightgray;
+      }
+
+      .top-row button:active {
+        background-color: darkgrey;
+      }
+
+      .createTaskBox {
+        
+        border-radius: 15px;
+        border: black 3px solid;
+        position: absolute;
+        left: 550px;
+        top: 275px;
+        width: 350px;
+        height: 200px;
+        background-color: grey;
+      }
+
+      .createTaskBox p {
+
+        font-family: 'Fredoka', sans-serif;
+        font-weight: 500;
+        font-size: 25px;
+        margin-top: 25px;
+        margin-left: 115px;
+      }
+
+      .createTaskBox .newTask-inp {
+        width: 80%;     /* or a fixed px value like 300px */
+        height: 40px;   /* taller input */
+        font-size: 15px; /* easier to read */
+        padding: 5px 10px;
+        box-sizing: border-box;
+        border-radius: 15px;
+        margin-top: 0px;
+        margin-left: 30px;
+        font-family: sans-serif;
+        
+      }
+
+      .createTaskBox .newBtn {
+
+        position: absolute;
+        margin-top: 70px;
+        margin-left: -20px;
+        width: 50px;
+        height: 40px;
+        border-radius: 15px;
+        background-color: white;
+        color: black;
+        font-size: 30px;
+        font-family: 'Fredoka', sans-serif;
+      }
+
+      .createTaskBox .newBtn:hover {
+
+        background-color: lightgray;
+      }
+
+      .createTaskBox .newBtn:active {
+        background-color: darkgray;
+      }
+
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  </head>
+  <body>
+    <div class="box">
+      <div class="top-row">
+        <h1>Daily Task Manager</h1>
+        <button id="btn">New Task</button>
+      </div>
+    </div>
+    <div id="taskBoxBtn" class="createTaskBox"> 
+    </div>
+    <script>
+
+      const newDivBtn = document.getElementById('taskBoxBtn');
+
+      const newText = document.createElement('p');
+      const newInput = document.createElement('input');
+      const newButton = document.createElement('button');
+
+      newInput.classList.add('newTask-inp');
+      newInput.placeholder = 'Type a new task...';
+
+      newText.textContent = 'New Task';
+
+      newButton.classList.add('newBtn');
+
+      newButton.textContent = '+';
+
+      const iconList = [];
+
+      //const listText = document.createElement('p');
+
+      function createNewDivButton(newClass) { //this function opens closes the new task option allowing input to be inputted and saved as a new task
+
+        if(newDivBtn.classList.contains(newClass)) {
+         newDivBtn.classList.remove(newClass); 
+        }
+        else if(!newDivBtn.classList.contains(newClass)) {
+          newDivBtn.classList.add(newClass);
+        }
+        if (newDivBtn.contains(newText)) {
+          // If yes, remove them
+          newDivBtn.removeChild(newText);
+        } else if(!newDivBtn.contains(newText)){
+          // If not, append them
+          newDivBtn.appendChild(newText);
+        }
+        if (newDivBtn.contains(newInput)) {
+          // If yes, remove them
+          newDivBtn.removeChild(newInput);
+        } else if(!newDivBtn.contains(newInput)){
+          // If not, append them
+          newDivBtn.appendChild(newInput);
+        }
+
+        //for button
+        if (newDivBtn.contains(newButton)) {
+          // If yes, remove them
+          newDivBtn.removeChild(newButton);
+        } else if(!newDivBtn.contains(newButton)){
+          // If not, append them
+          newDivBtn.appendChild(newButton);
+        }
+      }
+
+      //const inpNewTask = document.getElementById('newTask-inp');
+      //inpNewTask.placeholder = "Type a new task...";
+      newDivBtn.appendChild(newText);
+      newDivBtn.appendChild(newInput);
+      newDivBtn.appendChild(newButton);
+
+      document.getElementById('btn').addEventListener('click', function() {
+
+        createNewDivButton('createTaskBox');
+        newInput.value = '';
+        newInput.placeholder = 'Type a new task...';
+        /*if (newDivBtn.contains(newText)) {
+          // If yes, remove them
+          newDivBtn.removeChild(newText);
+        } else if(!newDivBtn.contains(newText)){
+          // If not, append them
+          newDivBtn.appendChild(newText);
+        }
+        if (newDivBtn.contains(newInput)) {
+          // If yes, remove them
+          newDivBtn.removeChild(newInput);
+        } else if(!newDivBtn.contains(newInput)){
+          // If not, append them
+          newDivBtn.appendChild(newInput);
+        }
+
+        //for button
+        if (newDivBtn.contains(newButton)) {
+          // If yes, remove them
+          newDivBtn.removeChild(newButton);
+        } else if(!newDivBtn.contains(newButton)){
+          // If not, append them
+          newDivBtn.appendChild(newButton);
+        }*/
+      });
+      
+      function createNewDiv(newClassName) {
+
+        console.log('working');
+
+        const container = document.querySelector('.box');
+
+        const newDiv = document.createElement('div');
+        newDiv.classList.add(newClassName);
+
+        const newText = document.createElement('p');
+        const textFill = newInput.value;
+
+        newText.textContent = textFill;
+
+        const checkBox = document.createElement('i');
+
+        checkBox.classList.add('fa-solid', 'fa-square');
+
+        const deleteBox = document.createElement('i');
+        deleteBox.classList.add('fa-solid', 'fa-trash');
+
+        newDiv.appendChild(newText);
+        newDiv.appendChild(checkBox);
+        newDiv.appendChild(deleteBox);
+
+        iconList.push(checkBox);
+
+
+
+        container.appendChild(newDiv);
+      }
+
+
+      document.querySelector('.newBtn').addEventListener('click', function() {
+
+        createNewDiv('list-bar');
+        attachListenersToAllIcons();
+        createNewDivButton('createTaskBox');
+      });
+
+      function attachListenersToAllIcons() {
+        iconList.forEach(icon => {
+          icon.addEventListener('click', () => {
+            if(icon.classList.contains('fa-square')) {
+              icon.classList.remove('fa-square');
+              icon.classList.add('fa-check-square');
+            }
+            else if(icon.classList.contains('fa-check-square')) {
+              icon.classList.remove('fa-check-square');
+              icon.classList.add('fa-square');
+            }
+          })
+
+          console.log(icon);
+        })
+      }
+
+      //add <p> with text New Task
+      //add the input into the div with the id and then add the class to it?
+    </script>
+  </body>
+</html>
