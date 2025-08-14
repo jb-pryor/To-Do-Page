@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8"> <!-- Proper text encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile-friendly scaling -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <title>ToDoForYou</title>
@@ -247,19 +250,19 @@
 
 
         checkBox.addEventListener('click', () => {
-          if (checkBox.classList.contains('fa-square')) {
-            checkBox.classList.remove('fa-square');
-            checkBox.classList.add('fa-check-square');
-            newText.classList.toggle('cross-out');
-          } else {
-            checkBox.classList.remove('fa-check-square');
-            checkBox.classList.add('fa-square');
-            newText.classList.toggle('cross-out');
-          }
+          
+          checkBox.classList.toggle('fa-square');
+          checkBox.classList.toggle('fa-check-square');
+          newText.classList.toggle('cross-out');
+
         });
 
         const deleteBox = document.createElement('i');
         deleteBox.classList.add('fa-solid', 'fa-trash');
+
+        deleteBox.addEventListener('click', () => {
+          newDiv.remove();
+        })
 
         newDiv.appendChild(newText);
         newDiv.appendChild(checkBox);
