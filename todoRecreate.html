@@ -41,6 +41,10 @@
 
       }
 
+      .cross-out {
+        text-decoration: line-through;
+      }
+
       .box {
 
         border: black 3px solid; /* You forgot 'solid' for the border */
@@ -246,9 +250,11 @@
           if (checkBox.classList.contains('fa-square')) {
             checkBox.classList.remove('fa-square');
             checkBox.classList.add('fa-check-square');
+            newText.classList.toggle('cross-out');
           } else {
             checkBox.classList.remove('fa-check-square');
             checkBox.classList.add('fa-square');
+            newText.classList.toggle('cross-out');
           }
         });
 
